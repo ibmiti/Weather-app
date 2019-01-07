@@ -9,6 +9,14 @@ const API_KEY = "181a59f51e6d2f159c8644b30670e4ba";
 
 
 class App extends React.Component {
+  state = {
+    temperature: undefined,
+    city: undefined,
+    country: undefined,
+    humidity: undefined,
+    description: undefined,
+    error: undefined,
+  }
   getWeather = async (e) => {
     e.preventDefault();
     const city = e.target.elements.city.value;
@@ -16,6 +24,14 @@ class App extends React.Component {
     const api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${API_KEY}`);
     const data = await api_call.json();
     console.log(data);
+    this.state({
+      temperature: data.main.temp,
+      city: data.name,
+      country: data.sys.country,
+      humidity: data.main.humidity,
+      description: data.weather[0].description,
+      error: ""
+    });
   }
   render() {
     return (
